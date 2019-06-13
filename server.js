@@ -24,3 +24,10 @@ const port = process.env.PORT || 5000; // day la bien moi truong  giong voi a=1?
 app.listen(port, () => {
     console.log(`server is runing on port ${port}`);
 })
+
+/*------------
+    cac buoc register
+    1. Get thong tin
+    2. Validate: check da nhap chua, phone, email
+    3. ma hoa password (hash) => dung phuong phap bcriptjs (salt)
+-----------------*/
