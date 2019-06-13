@@ -31,3 +31,9 @@ app.listen(port, () => {
     2. Validate: check da nhap chua, phone, email
     3. ma hoa password (hash) => dung phuong phap bcriptjs (salt)
 -----------------*/
+/*------------
+    cac buoc login
+    1. Get thong tin
+    2. Validate
+    3. Success -> token
+-----------------*/
