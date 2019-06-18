@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 //router
-app.use("/api/users", require("./routers/api/users"));
+app.use("/api/users", require("./routers/api/index"));
 
 const port = process.env.PORT || 5000; // day la bien moi truong  giong voi a=1?a:b
 
