@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {User} = require("../../modles/User");
+const {User} = require("../../../modles/User");
 const bcript = require("bcryptjs"); // cai dat npm i bcryptjs
 const jwt = require("jsonwebtoken");// Cai dat npm i jsonwebtoken
-const {authenticating, authorizasing} = require("../../middleware/auth");
+
 
 /* app.get("/", (req, res) => {
     res.json({message: "Hello word"})
@@ -88,6 +88,7 @@ const login = (req, res, next) => {
                 if( !isMatch) return res.status(400).json(err);//return Promise.reject({errors: "Wrpng password"})
 
                 const payload = {
+                    id: user._id,
                     email: user.email,
                     fullName: user.fullName,
                     userType: user.userType
@@ -136,18 +137,22 @@ const login = (req, res, next) => {
 // Desc: test private
 //Access: PRIVATE: chi cho nhung user nao da login moi xai dc
 
-router.get("/test-private", 
+const testPrivate = (req, res, next) =>{   
+    res.status(200).json({message: " ban da thay dc dieu bi mat"});
+}
+/* router.get("/test-private", 
     authenticating, 
     authorizasing(["admin", "coder22"]),
     (req, res) => {
     res.status(200).json({message: " ban da thay dc dieu bi mat"});
-})
+}) */
 
 //module.exports = router;
 module.exports = {
     register,
     login,
-    
+    testPrivate
 }
 
 //Single signon: dang ky mot lan co the dang nhap toan bo dich vu lien quan nhu dang nhap google co the dung gmail, google drive...
+

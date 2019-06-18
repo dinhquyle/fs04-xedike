@@ -17,13 +17,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 //router
-app.use("/api/users", require("./routers/api/index"));
+app.use("/api/users", require("./routers/api/users/index"));
 
 const port = process.env.PORT || 5000; // day la bien moi truong  giong voi a=1?a:b
 
 app.listen(port, () => {
     console.log(`server is runing on port ${port}`);
 })
+
+//static
+app.use('/uploads', express.static('uploads'));// cau hinh de chay dc hinh anh tren browserhttp://localhost:5000/uploads/tenhinh.jpg
 
 /*------------
     cac buoc register

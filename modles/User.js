@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
         type: String, 
         default: new Date()
     },
+    avatar: {type: String},
     numberOfTrips: {type: Number},
     numberOfKms: {type: Number},
     isActive: {type: Boolean, default: true}
