@@ -147,11 +147,25 @@ const testPrivate = (req, res, next) =>{
     res.status(200).json({message: " ban da thay dc dieu bi mat"});
 }) */
 
+const uploadAvatar = (req, res, next) => {
+        if( req.errors) return res.status(400).json({errors: req.errors})
+        console.log(req.file);
+        const { id } = req.user;
+        User.findById(id)
+            .then(user => {
+                if( !user ) return Promise.reject({errors: "cannot upload"})
+                user.avatar = req.file.path
+                return user.save()
+            })
+            .then( user => res.status(200).json(user))
+            .catch(err => res.status(400).json(err))
+}
 //module.exports = router;
 module.exports = {
     register,
     login,
-    testPrivate
+    testPrivate,
+    uploadAvatar
 }
 
 //Single signon: dang ky mot lan co the dang nhap toan bo dich vu lien quan nhu dang nhap google co the dung gmail, google drive...
