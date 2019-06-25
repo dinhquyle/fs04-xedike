@@ -3,6 +3,7 @@ const router = express.Router();
 const {User} = require("../../../modles/User");
 const bcript = require("bcryptjs"); // cai dat npm i bcryptjs
 const jwt = require("jsonwebtoken");// Cai dat npm i jsonwebtoken
+const validateRegisterInput = require("../../../validation/validateRegisterInput")
 
 
 /* app.get("/", (req, res) => {
@@ -25,28 +26,25 @@ const jwt = require("jsonwebtoken");// Cai dat npm i jsonwebtoken
 //Access: PUBLIC
 
 //tach ra thanh ham rieng
-const register = (req, res, next) =>{
-    const {email, password, fullName, userType, phone, DOB} = req.body;
-    // Gia dinh: input valid
-    User.findOne({$or: [{email},{phone}]})
-        .then(user => {
-            if( user ) return Promise.reject({errors: "Email or phone exists" });
-            const newUser = new User({
-                email, password, fullName, userType, phone, DOB
-            })
-            bcript.genSalt(10, (err, salt) => {
-                if( err) return Promise.reject(err);
-                bcript.hash(password, salt, (err, hash) => {
-                    if( err ) return Promise.reject(err);
+const register = async(req, res, next) =>{
+    const {isValid, errors } = await validateRegisterInput(req.body);
+    if( !isValid ) return res.status(400).json(errors);
 
-                    newUser.password = hash;
-                    newUser.save()
-                        .then(user => res.status(200).json(user))
-                        .catch(err => res.status(400).json(err))
-                })
-            })
+    const {email, password, fullName, userType, phone, DOB} = req.body;    
+    const newUser = new User({
+        email, password, fullName, userType, phone, DOB
+    })
+    bcript.genSalt(10, (err, salt) => {
+        if( err) return Promise.reject(err);
+        bcript.hash(password, salt, (err, hash) => {
+            if( err ) return Promise.reject(err);
+
+            newUser.password = hash;
+            newUser.save()
+                .then(user => res.status(200).json(user))
+                .catch(err => res.status(400).json(err))
         })
-        .catch( err => res.status(400).json(err));
+    })
 }
 
 /* router.post("/register", (req, res) => {
