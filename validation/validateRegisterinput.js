@@ -68,6 +68,10 @@ validateRegisterInput = async(data) => {
     else if(!validator.equals(data.password, data.password2) ){
         errors.password2 = "Password is not match"
     }
+    //Fullname
+    if( validator.isEmpty(data.fullName)){
+        errors.fullName = "Full name is required"
+    }
     // phone, 
     if( validator.isEmpty(data.phone)){
         errors.phone = "Phone is required"

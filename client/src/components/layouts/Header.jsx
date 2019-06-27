@@ -37,7 +37,7 @@ import {
                       <NavLink href="/components/">Components</NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                      <NavLink href="https://github.com/dinhquyle/">GitHub</NavLink>
                     </NavItem>
                   </Nav>
                 </Collapse>

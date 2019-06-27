@@ -78,7 +78,7 @@ const register = async(req, res, next) =>{
 //Access: PUBLIC
 // Auth: - Authentication: da dang nhap dang ky chua -Authorization: phan quyen
 const login = (req, res, next) => {
-    const {email, password} = req.body;
+    const {email, password, fingerprint} = req.body;
     User.findOne({email})
         .then(user => {
             if( !user ) return Promise.reject({ errors: "user does not exists"});
@@ -91,8 +91,8 @@ const login = (req, res, next) => {
                     fullName: user.fullName,
                     userType: user.userType
                 }
-
-                jwt.sign(payload, "Cybersoft", {expiresIn: "1h"}, (err, token) => {
+                const KEY = "Cybersoft" + fingerprint;
+                jwt.sign(payload, KEY, {expiresIn: "1h"}, (err, token) => {
                     if( err ) return res.status(400).json(err);
                     return res.status(200).json({
                         message: "success",

@@ -6,6 +6,9 @@ const authenticating = (req, res, next) =>{
         - thanh cong: return next()
         - that bai: res.json(err);*/
     const token = req.header("Authorization");
+    const fingerprint = req.header("fingerprint");
+    console.log("TCL: authenticating -> fingerprint", fingerprint);
+    const KEY = "Cybersoft" + fingerprint;
     try{
         const decoded = jwt.verify(token, "Cybersoft");
         console.log("decoded", decoded)
@@ -13,7 +16,7 @@ const authenticating = (req, res, next) =>{
         next();
 
     } catch(error){
-        res.status(403).json(error)
+        res.status(403).json({error: "Kg the vao, token hoac Fingerprint kg hop le"})
     }
 }
 
